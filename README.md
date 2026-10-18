@@ -3,7 +3,7 @@ spaCy models for texts of the 16th to 20th centuries. Both do part-of-speech tag
 
 | Model | Language | Training data | Download |
 |-------|----------|---------------|----------|
-| [historic-french-model](fr/) | French | 50,000 sentences from ARTFL-Frantext | [v6.0](https://github.com/ARTFL-Project/spacy-historic-models/releases/tag/v6.0) |
+| [historic-french-model](fr/) | French | 50,000 sentences from ARTFL-Frantext | [fr-v7.0](https://github.com/ARTFL-Project/spacy-historic-models/releases/tag/fr-v7.0) |
 | [historic-english-model](en/) | British English | 65,000 sentences from EEBO-TCP, ECCO-TCP and Project Gutenberg | [en-v2.0](https://github.com/ARTFL-Project/spacy-historic-models/releases/tag/en-v2.0) |
 
 Each model's README gives its scores, installation and rebuilding steps.

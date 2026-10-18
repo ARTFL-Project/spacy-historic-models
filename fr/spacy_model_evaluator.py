@@ -14,7 +14,7 @@ spacy.require_gpu()
 MODELS = {
     "fr_dep_news_trf": "fr_dep_news_trf",
     "historic-french-model": "historic-french-model",
-    "historic tokenizer, retrained": "training_space/historic-french-model-tokenizer",
+    "v7 release": "training_space/release_v7/stage/historic-french-model",
 }
 DEV_DATA_PATH = "training_space/data/test.spacy"
 VALIDATED_TEST_PATH = "training_space/data/validated_test.spacy"
