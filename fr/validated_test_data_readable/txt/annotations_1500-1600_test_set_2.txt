@@ -732,7 +732,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 15    de                   ADP        P          de                   case            O
 16    mectre               VERB       VINF       mettre               xcomp           O
 17    ung                  DET        DET        un                   det             O
-18    cueur                NOUN       NC         cœur                 obj             O
+18    cueur                NOUN       NC         coeur                 obj             O
 19    des                  ADP        P+D        de                   case            O
 20    deux                 NUM        ADJ        deux                 nummod          O
 21    autres               PRON       PRO        autre                amod            O

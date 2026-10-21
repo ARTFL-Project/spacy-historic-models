@@ -1,5 +1,6 @@
 import argparse
 import random
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -16,6 +17,56 @@ TEST_DB = DocBin()
 VALIDATED_DB = DocBin()
 PERIOD_DB = {f"{i}-{i + 100}": DocBin() for i in range(1500, 2000, 100)}
 NLP = spacy.load("fr_dep_news_trf")
+
+# Extra copies of training sentences printed as in early editions: with the long s (1500-1800), œ for oe and oe for œ,
+# æ for ae, sometimes æ for œ (cæur, a frequent misprint of cœur) and a capital. Their lemmas stay plain (coeur, être,
+# quae), so the model learns to lemmatize such printings. Every sentence with a word that can take a ligature gets a
+# copy; a third of the other 1500-1800 sentences get one with the long s.
+LONG_S_SHARE = 1 / 3
+LONG_S_PERIODS = {"1500-1600", "1600-1700", "1700-1800"}
+# where the standard spelling has œ: -oeu-, oeil, an initial oe before a consonant (Oedipe, oesophage), foet-
+OE = r"oe(?=u|il)|^oe(?=[bcdfgjklmnpqrstvxz])|(?<=f)oe(?=t)"
+LIGATURE_WORD = re.compile(rf"[œæŒÆ]|{OE}|ae", re.IGNORECASE)
+
+
+def ligature_variant(word, rng=None):
+    """The word with its ligatures written out, or with oe/ae printed as ligatures; None if it has neither.
+    With a random generator, æ sometimes stands for œ and the word sometimes takes a capital."""
+    if re.search("[œæŒÆ]", word):
+        out = word.replace("œ", "oe").replace("Œ", "Oe").replace("æ", "ae").replace("Æ", "Ae")
+    else:
+        def ligature(m):
+            upper = m.group(0)[0].isupper()
+            if rng is not None and word[m.end():m.end() + 1].lower() == "u" and rng.random() < 0.25:
+                return "Æ" if upper else "æ"
+            return "Œ" if upper else "œ"
+        out = re.sub(OE, ligature, word, flags=re.IGNORECASE)
+        out = re.sub("ae", "æ", re.sub("A[Ee]", "Æ", out))
+    if out == word:
+        return None
+    if rng is not None and out[0].islower() and rng.random() < 0.2:
+        out = out[0].upper() + out[1:]
+    return out
+
+
+def printed_variant(sentence, period, rng=None):
+    """The sentence printed with the long s (1500-1800) and its ligatures swapped, or None if that changes nothing."""
+    tokens = sentence["annotations"]["tokens"]
+    if not all("text" in t for t in tokens):
+        return None
+    words = [t["text"] for t in tokens]
+    spaces = token_spaces(sentence["text"], words)
+    variant = []
+    for token in tokens:
+        word = token["text"]
+        if period in LONG_S_PERIODS:
+            word = re.sub(r"s(?=[^\W\d_])", "ſ", word)  # ſ everywhere but at the end of a word
+        word = ligature_variant(word, rng) or word
+        variant.append({**token, "text": word})
+    if [t["text"] for t in variant] == words:
+        return None
+    text = "".join(t["text"] + (" " if space else "") for t, space in zip(variant, spaces))
+    return {**sentence, "text": text, "annotations": {**sentence["annotations"], "tokens": variant}}
 
 
 def augment_rare_categories(examples, rare_pos=["INTJ"], rare_tags=["VIMP"]):
@@ -215,6 +266,7 @@ if __name__ == "__main__":
     train_fraction = 1 - args.dev_fraction
 
     random.seed(0)
+    variant_rng = random.Random(1)
     training_sentences = []
     dev_sentences = []
     for period in [(1500, 1600), (1600, 1700), (1700, 1800), (1800, 1900), (1900, 2000)]:
@@ -223,6 +275,15 @@ if __name__ == "__main__":
             split = round(train_fraction * len(sentences))
             training_sents = augment_rare_categories(sentences[:split])
             training_sentences.extend(training_sents)
+            name = f"{period[0]}-{period[1]}"
+            variants = []
+            for sentence in sentences[:split]:
+                ligature = any(LIGATURE_WORD.search(t.get("text", "")) for t in sentence["annotations"]["tokens"])
+                if ligature or (name in LONG_S_PERIODS and variant_rng.random() < LONG_S_SHARE):
+                    if variant := printed_variant(sentence, name, variant_rng):
+                        variants.append(variant)
+            training_sentences.extend(variants)
+            print(f"{name}: {len(variants)} training sentences added in early printing (long s, ligatures)")
             dev_sents = sentences[split:]
             dev_sentences.extend(dev_sents)
 

@@ -209,7 +209,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 22    intéressent          VERB       V          intéresser           acl:relcl       O
 23    ni                   CCONJ      CC         ni                   cc              O
 24    le                   DET        DET        le                   det             O
-25    coeur                NOUN       NC         cœur                 obj             O
+25    coeur                NOUN       NC         coeur                 obj             O
 26    ni                   CCONJ      CC         ni                   cc              O
 27    l'                   DET        DET        le                   det             O
 28    esprit               NOUN       NC         esprit               conj            O

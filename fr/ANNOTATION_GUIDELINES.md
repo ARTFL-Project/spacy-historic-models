@@ -76,7 +76,8 @@ Numbers have POS NUM and TAG DET before a noun (*mille hommes*), ADJ after an ar
 - Titles (*Madame, Monsieur, M., Mme, Roy*), *saint* before a name, and capitalized common nouns (*Muses, Nature, Université, Jésuites*): NOUN, TAG NC, lowercase lemma. Names are PROPN even when written in lowercase (*la chevrette*).
 
 ## Lemmas
-- Modern standard spelling: *enfans* → enfant, *medecins* → médecin, *luy* → lui, *mesme* → même, *tousjours* → toujours, *coeur* → cœur.
+- Modern standard spelling: *enfans* → enfant, *medecins* → médecin, *luy* → lui, *mesme* → même, *tousjours* → toujours.
+- No ligatures, long s or abbreviation marks, so that lemmas can be searched as typed: œ → oe, æ → ae, ſ → s (*cœur*, *coeur* → coeur; *œuvres* → oeuvre; *eſt* → être; *Œdipe* → Oedipe).
 - Nouns singular, adjectives masculine singular, verbs infinitive.
 - Contracted *au, aux* → à; *du, des* (= de + le/les) → de, with POS ADP, TAG P+D.
 - Indefinite article *des* (*des travaux*, *il y a des objections*) → un, with POS DET, TAG DET.

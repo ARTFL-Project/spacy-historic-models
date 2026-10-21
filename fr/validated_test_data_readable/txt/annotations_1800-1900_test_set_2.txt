@@ -358,7 +358,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 2     suivit               VERB       V          suivre               root            O
 3     longtemps            ADV        ADV        longtemps            advmod          O
 4     des                  ADP        P+D        de                   det             O
-5     yeux                 NOUN       NC         œil                  obl             O
+5     yeux                 NOUN       NC         oeil                  obl             O
 6     ,                    PUNCT      PONCT      ,                    punct           O
 7     et                   CCONJ      CC         et                   cc              O
 8     peut-être            ADV        ADV        peut-être            advmod          O

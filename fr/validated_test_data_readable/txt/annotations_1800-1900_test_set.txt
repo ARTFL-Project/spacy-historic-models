@@ -628,7 +628,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 5     autre                PRON       PRO        autre                obl             O
 6     ,                    PUNCT      PONCT      ,                    punct           O
 7     nos                  DET        DET        notre                det             O
-8     coeurs               NOUN       NC         cœur                 nsubj           O
+8     coeurs               NOUN       NC         coeur                 nsubj           O
 9     n'                   PART       ADV        ne                   advmod          O
 10    en                   PRON       CLO        en                   obj             O
 11    feront               VERB       V          faire                ccomp           O
@@ -823,7 +823,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 14    regret               NOUN       NC         regret               conj            O
 15    mouilla              VERB       V          mouiller             root            O
 16    les                  DET        DET        le                   det             O
-17    yeux                 NOUN       NC         œil                  obj             O
+17    yeux                 NOUN       NC         oeil                  obj             O
 18    de                   ADP        P          de                   case            O
 19    Szaffie              PROPN      NPP        Szaffie              nmod            B-PER
 20    .                    PUNCT      PONCT      .                    punct           O

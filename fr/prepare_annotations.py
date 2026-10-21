@@ -311,10 +311,9 @@ LEMMA_GROUPS = {
 }
 PRONOMINAL_BEFORE = {"l'", "les", "un", "une", "des", "aux", "quelque", "quelques", "nul", "aucun", "aucune", "cet", "cette", "ces"}
 INFINITIVE_ENDINGS = ("er", "ir", "re", "oir", "ïr")
-# lemmas written both with and without the ligature: use the standard spelling
-OE_LIGATURE = {"coeur": "cœur", "soeur": "sœur", "oeuvre": "œuvre", "oeil": "œil", "noeud": "nœud", "voeu": "vœu",
-               "moeurs": "mœurs", "boeuf": "bœuf", "oeuf": "œuf", "choeur": "chœur", "manoeuvre": "manœuvre",
-               "chef-d'oeuvre": "chef-d'œuvre", "rancoeur": "rancœur", "oeuvrer": "œuvrer", "foetus": "fœtus"}
+# lemmas are written without ligatures, the long s or abbreviation marks, so that they can be searched as typed
+PLAIN_LEMMA = str.maketrans({"œ": "oe", "Œ": "Oe", "æ": "ae", "Æ": "Ae", "ſ": "s", "ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl",
+                             "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "st", "ﬆ": "st", "ꝑ": "per", "ꝓ": "pro"})
 # past participle form -> infinitive, infinitive -> its participle forms and masculine singular form,
 # filled from the training data by build_participle_lemmas()
 PARTICIPLE_LEMMAS = {}
@@ -676,11 +675,10 @@ def elided_de_tag(tokens, i):
         return {"pos": "ADP", "tag": "P"}
 
 
-def ligature_lemma(tokens, i):
-    lemma = tokens[i]["lemma"]
-    if lemma.lower() in OE_LIGATURE:
-        target = OE_LIGATURE[lemma.lower()]
-        return {"lemma": target[0].upper() + target[1:] if lemma[0].isupper() else target}
+def plain_lemma(tokens, i):
+    lemma = tokens[i]["lemma"].translate(PLAIN_LEMMA)
+    if lemma != tokens[i]["lemma"]:
+        return {"lemma": lemma}
 
 
 def ne_tag(tokens, i):
@@ -719,11 +717,11 @@ CONTEXT_RULES = [
     ("autre(s) with no noun -> PRON", pronominal_autre),
     ("euphonic -t -> X", euphonic_t),
     ("lemma: participle -> infinitive", participle_lemma),
-    ("lemma: oe -> œ", ligature_lemma),
     ("lemma: participle used as adjective -> adjective", adjective_participle),
     ("tag: participle used as adjective -> ADJ", adjective_tag),
     ("y ADV -> PRON", adverb_y),
     ("lemma: piece of a multi-word lemma -> its own word", multiword_lemma_piece),
+    ("lemma: no ligatures or long s (œ -> oe, æ -> ae, ſ -> s)", plain_lemma),
 ]
 
 

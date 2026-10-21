@@ -38,6 +38,8 @@ SPACED_CLITICS = CLITICS + ["ce", "en", "elle", "il", "ils", "je", "là", "moi",
 # historic spellings of spaCy's whole-word exceptions
 HISTORIC_WHOLE = ["peut-estre", "peut-eſtre", "aujourd'huy", "auiourd'huy", "auiourd'hui", "celuy-cy", "celle-cy",
                   "celles-cy", "ceux-ci", "ceux-cy"]
+# compounds the annotations keep whole but the tokenizer would split ("chef-d'œuvre" -> chef - d' œuvre)
+COMPOUNDS = ["chef-d'oeuvre", "chefs-d'oeuvre", "main-d'oeuvre", "crève-coeur"]
 PRONOUNS = ["moi", "toi", "soi", "lui", "elle", "nous", "vous", "eux", "elles", "moy", "toy", "soy", "luy"]
 MEME = ["même", "mêmes", "mesme", "mesmes", "meſme", "meſmes"]
 
@@ -60,6 +62,7 @@ def add_special_cases(tokenizer):
             tokenizer.add_special_case(text[0].upper() + text[1:],
                                        [{ORTH: first[0].upper() + first[1:]}] + [{ORTH: t[ORTH]} for t in tokens[1:]])
     words = HISTORIC_WHOLE + [f"{pronoun}-{meme}" for pronoun, meme in itertools.product(PRONOUNS, MEME)]
+    words += COMPOUNDS + [word.replace("oe", "œ") for word in COMPOUNDS]
     for word in words:
         for apostrophe in APOSTROPHES:
             for form in case_variants(word.replace("'", apostrophe)):

@@ -158,7 +158,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 1     ,                    PUNCT      PONCT      ,                    punct           O
 2     dans                 ADP        P          dans                 case            O
 3     mon                  DET        DET        mon                  det             O
-4     coeur                NOUN       NC         cœur                 obl             O
+4     coeur                NOUN       NC         coeur                 obl             O
 5     étant                AUX        VPR        être                 advcl           O
 6     bien-aise            ADJ        ADJ        bien-aise            acomp           O
 7     :                    PUNCT      PONCT      :                    punct           O

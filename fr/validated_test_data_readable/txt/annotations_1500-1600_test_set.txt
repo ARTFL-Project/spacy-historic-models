@@ -879,7 +879,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 5     camp                 NOUN       NC         camp                 nmod            O
 6     ,                    PUNCT      PONCT      ,                    punct           O
 7     ma                   DET        DET        mon                  det             O
-8     soeur                NOUN       NC         sœur                 appos           O
+8     soeur                NOUN       NC         soeur                 appos           O
 9     ,                    PUNCT      PONCT      ,                    punct           O
 10    content              VERB       VPP        conter               amod            O
 11    de                   ADP        P          de                   case            O

@@ -792,7 +792,7 @@ IDX   TOKEN                POS        TAG        LEMMA                DEP       
 7     de                   ADP        P          de                   case            O
 8     tout                 DET        DET        tout                 det             O
 9     son                  DET        DET        son                  det             O
-10    coeur                NOUN       NC         cœur                 obl             O
+10    coeur                NOUN       NC         coeur                 obl             O
 11    ;                    PUNCT      PONCT      ;                    punct           O
 12    et                   CCONJ      CC         et                   cc              O
 13    remontant            VERB       VPR        remonter             conj            O
